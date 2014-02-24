@@ -244,7 +244,8 @@ withAutoCompleteString:(NSString *)string
         BOOL attributedTextSupport = [cell.textLabel respondsToSelector:@selector(setAttributedText:)];
         NSAssert(attributedTextSupport, @"Attributed strings on UILabels are  not supported before iOS 6.0");
         NSRange boldedRange = [[string lowercaseString]
-                               rangeOfString:[self.text lowercaseString]];
+                               rangeOfString:[self.text lowercaseString]
+                               options:NSDiacriticInsensitiveSearch];
         boldedString = [self boldedString:string withRange:boldedRange];
     }
     
@@ -1036,7 +1037,8 @@ withAutoCompleteString:(NSString *)string
         BOOL suggestedStringDeservesPriority = NO;
         for(NSString *component in suggestedStringComponents){
             NSRange occurrenceOfInputString = [[component lowercaseString]
-                                            rangeOfString:[inputString lowercaseString]];
+                                            rangeOfString:[inputString lowercaseString]
+                                               options:NSDiacriticInsensitiveSearch];
             
             if (occurrenceOfInputString.length != 0 && occurrenceOfInputString.location == 0) {
                 suggestedStringDeservesPriority = YES;
